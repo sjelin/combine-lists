@@ -1,6 +1,6 @@
 {
   "name": "combine-lists",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Merge two lists, trying to preserve the order of both ",
   "main": "index.js",
   "scripts": {
