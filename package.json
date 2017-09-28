@@ -26,7 +26,8 @@
   },
   "homepage": "https://github.com/sjelin/combine-lists#readme",
   "dependencies": {
-    "lodash": "^4.5.0"
+    "lodash": "^4.5.0",
+    "object-hash": "^1.1.8"
   },
   "devDependencies": {
     "jasmine": "^2.4.1",
