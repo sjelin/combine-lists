@@ -1,4 +1,5 @@
-var _ = require('lodash');
+var _ = require('lodash'),
+  objecthash = require('object-hash');
 
 /** Merge two lists, removing duplicates, and doing everything possible to
  *  maintain the order of the two lists.
@@ -34,6 +35,41 @@ var _ = require('lodash');
  *      list2 partially preserved
  */
 module.exports = function(list1, list2) {
+
+  var mapped_identifier = "!_";
+
+  var object_references = {};
+
+  var objects_to_strings = function(object)
+  {
+    if(typeof object == "object")
+    {
+      var hash = objecthash(object);
+      object_references[hash] = object;
+      return mapped_identifier + hash;
+    }
+    else
+    {
+      return object;
+    }
+  }
+
+  var strings_to_objects = function(object)
+  {
+    if(typeof object == "string" && object.indexOf(mapped_identifier) === 0)
+    {
+      return object_references[object.substring(mapped_identifier.length)] || object;
+    }
+    else
+    {
+      return object;
+    }
+  }
+
+  list1 = list1.map(objects_to_strings);
+  list2 = list2.map(objects_to_strings);
+
+
   /* This is going to get mathematical.  As noted above, the merged list will be
    * a copy of list1 with the items exclusive to list2 inserted in between.  But
    * additionally, we want to preserve the order of list2 as much as possible.
@@ -86,5 +122,8 @@ module.exports = function(list1, list2) {
       mergedIndexes = _.invert(merged);
     }
   }
+
+  merged = merged.map(strings_to_objects);
+
   return merged;
 };

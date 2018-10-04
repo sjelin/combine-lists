@@ -3,6 +3,13 @@ var _ = require('lodash');
 //require('seedrandom')('Hello, World!', {global: true});
 
 describe('make sure lists are being combine property', function() {
+  it("should handle arrays of objects", function()
+  {
+    expect(combine([{id: "foo"}], [{id: "bar"}])).toEqual([{id: "bar"}, {id: "foo"}]);
+    expect(combine(["a"], [{id: "bar"}])).toEqual([{id: "bar"}, "a"]);
+    expect(combine([1,2], [{id: "bar"}])).toEqual([{id: "bar"},1,2]);
+  });
+
   it('should handle empty arrays', function() {
     expect(combine([], [])).toEqual([]);
     expect(combine([1, 2, 3], [])).toEqual([1, 2, 3]);
